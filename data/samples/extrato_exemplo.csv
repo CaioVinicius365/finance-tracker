@@ -1,0 +1,21 @@
+data,estabelecimento,valor,tipo,modalidade
+2026-08-05,Salario Empresa XYZ,3500.00,entrada,debito
+2026-08-07,Supermercado Pao de Acucar,187.45,saida,debito
+2026-08-10,Starbucks,23.90,saida,credito
+2026-08-14,McDonalds,51.00,saida,debito
+2026-08-18,Uber,32.50,saida,credito
+2026-08-25,Netflix,55.90,saida,credito
+2026-09-05,Salario Empresa XYZ,3500.00,entrada,debito
+2026-09-03,Starbucks,23.90,saida,credito
+2026-09-08,Drogasil,16.35,saida,debito
+2026-09-11,Livraria,20.00,saida,credito
+2026-09-15,Uber,41.20,saida,credito
+2026-09-20,Pix recebido Maria,150.00,entrada,debito
+2026-09-25,Netflix,55.90,saida,credito
+2026-09-28,Supermercado Pao de Acucar,213.80,saida,debito
+2026-10-05,Salario Empresa XYZ,3500.00,entrada,debito
+2026-10-06,Uber,28.70,saida,credito
+2026-10-09,Starbucks,23.90,saida,credito
+2026-10-10,Borges Lanches,28.00,saida,credito
+2026-10-12,Netflix,55.90,saida,credito
+2026-10-13,Drogasil,42.10,saida,debito
