@@ -7,7 +7,8 @@ def categorize(estabelecimento):
             return categoria
     return "outros"
 
-print(categorize("UBER *TRIP"))
-print(categorize("Salario Empresa ABC"))
-print(categorize("Loja Desconhecida"))
-print(categorize("UBER EATS *PEDIDO"))
+if __name__ == "__main__":
+    print(categorize("UBER *TRIP"))
+    print(categorize("Salario Empresa ABC"))
+    print(categorize("Loja Desconhecida"))
+    print(categorize("UBER EATS *PEDIDO"))
