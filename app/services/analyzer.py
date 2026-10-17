@@ -7,3 +7,8 @@ def load_transactions(path):
     df["mes"] = df["data"].dt.to_period("M")
     df["categoria"] = df["estabelecimento"].apply(categorize)
     return df
+
+def monthly_summary(df):
+    resumo = df.groupby(["mes", "tipo"])["valor"].sum().unstack()
+    resumo["saldo"] = resumo["entrada"] - resumo["saida"]
+    return resumo
