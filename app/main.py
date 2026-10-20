@@ -13,5 +13,4 @@ def monthly():
     resumo = monthly_summary(df)
     resumo = resumo.reset_index()
     resumo["mes"] = resumo["mes"].astype(str)
-    print(resumo, flush=True)
     return resumo.to_dict(orient="records")
