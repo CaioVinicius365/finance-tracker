@@ -12,3 +12,8 @@ def monthly_summary(df):
     resumo = df.groupby(["mes", "tipo"])["valor"].sum().unstack()
     resumo["saldo"] = resumo["entrada"] - resumo["saida"]
     return resumo
+
+def category_summary(df):
+    gastos = df[df["tipo"] == "saida"]
+    resumo = gastos.groupby("categoria")["valor"].sum()
+    return resumo
