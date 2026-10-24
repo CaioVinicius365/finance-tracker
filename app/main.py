@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from app.services.analyzer import load_transactions, monthly_summary, category_summary
+import pandas as pd
 
 app = FastAPI()
 
@@ -21,3 +22,11 @@ def categories():
     resumo = category_summary(df)
     resumo = resumo.reset_index()
     return resumo.to_dict(orient="records")
+
+@app.post("/upload/summary")
+def upload_summary(file: UploadFile = File(...)):
+    df = load_transactions(file.file)
+    return {
+        "monthly": monthly_summary(df).reset_index().astype({"mes": str}).to_dict(orient="records"),
+        "categories": category_summary(df).reset_index().to_dict(orient="records"),
+    }
