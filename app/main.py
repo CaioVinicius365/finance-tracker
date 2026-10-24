@@ -1,8 +1,10 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from app.services.analyzer import load_transactions, monthly_summary, category_summary
 import pandas as pd
 
 app = FastAPI()
+
+REQUIRED_COLUMNS = {"data", "estabelecimento", "valor", "tipo"}
 
 @app.get("/health")
 async def root():
@@ -25,7 +27,18 @@ def categories():
 
 @app.post("/upload/summary")
 def upload_summary(file: UploadFile = File(...)):
-    df = load_transactions(file.file)
+    try:
+        df = load_transactions(file.file)
+    except KeyError as e:
+        raise HTTPException(status_code=400, detail=f"Coluna ausente no CSV: {e}")
+
+    ausentes = REQUIRED_COLUMNS - set(df.columns)
+    if ausentes:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Colunas ausentes no CSV: {sorted(ausentes)}",
+        )
+
     return {
         "monthly": monthly_summary(df).reset_index().astype({"mes": str}).to_dict(orient="records"),
         "categories": category_summary(df).reset_index().to_dict(orient="records"),
