@@ -1,0 +1,41 @@
+estabelecimento,categoria
+UBER *TRIP,transporte
+99 CORRIDA,transporte
+POSTO IPIRANGA,transporte
+SHELL SELECT,transporte
+ESTACIONAMENTO CENTRO,transporte
+METRO SP BILHETE,transporte
+SEM PARAR PEDAGIO,transporte
+CABIFY VIAGEM,transporte
+IFOOD *PEDIDO,alimentacao
+UBER EATS *PEDIDO,alimentacao
+SUPERMERCADO EXTRA,alimentacao
+CARREFOUR HIPER,alimentacao
+PAO DE ACUCAR,alimentacao
+ASSAI ATACADISTA,alimentacao
+HORTIFRUTI VERDE,alimentacao
+PADARIA ESTRELA,alimentacao
+STARBUCKS,restaurante
+MCDONALDS,restaurante
+BURGER KING,restaurante
+OUTBACK STEAKHOUSE,restaurante
+RESTAURANTE SABOR CASEIRO,restaurante
+PIZZARIA NAPOLI,restaurante
+LANCHES DO ZE,restaurante
+SUSHI HOUSE,restaurante
+NETFLIX,entretenimento
+SPOTIFY,entretenimento
+CINEMARK INGRESSO,entretenimento
+LIVRARIA CULTURA,entretenimento
+STEAM GAMES,entretenimento
+DISNEY PLUS,entretenimento
+HBO MAX,entretenimento
+TEATRO MUNICIPAL,entretenimento
+DROGASIL,pessoal
+DROGA RAIA,pessoal
+BARBEARIA CLASSICA,pessoal
+SALAO DE BELEZA,pessoal
+ACADEMIA SMART FIT,pessoal
+PIX RECEBIDO,pessoal
+LOJA DE ROUPAS MODA,pessoal
+FARMACIA POPULAR,pessoal
