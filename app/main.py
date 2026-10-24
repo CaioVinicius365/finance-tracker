@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.services.analyzer import load_transactions, monthly_summary
+from app.services.analyzer import load_transactions, monthly_summary, category_summary
 
 app = FastAPI()
 
@@ -13,4 +13,11 @@ def monthly():
     resumo = monthly_summary(df)
     resumo = resumo.reset_index()
     resumo["mes"] = resumo["mes"].astype(str)
+    return resumo.to_dict(orient="records")
+
+@app.get("/summary/categories")
+def categories():
+    df = load_transactions("data/samples/extrato_exemplo.csv")
+    resumo = category_summary(df)
+    resumo = resumo.reset_index()
     return resumo.to_dict(orient="records")
