@@ -4,6 +4,9 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 from app.services.analyzer import load_transactions, monthly_summary, category_summary
+from app.services.categorizer import categorize
+from app.services.ml_categorizer import categorize_ml
+from app.services.chat import montar_contexto, perguntar
 
 st.set_page_config(page_title="Finance Tracker", page_icon="💰", layout="wide")
 
@@ -41,11 +44,18 @@ def aplicar_tema(fig):
 
 st.title("Finance Tracker")
 
-arquivo = st.file_uploader("Envie seu extrato em CSV", type="csv")
+st.sidebar.header("Configurações")
+arquivo = st.sidebar.file_uploader("Envie seu extrato em CSV", type="csv")
+metodo = st.sidebar.radio("Método de categorização", ["Regras", "Modelo ML"])
 
-if arquivo is not None:
-    df = load_transactions(arquivo)
-    st.write("Transações carregadas:", len(df))
+if arquivo is None:
+    st.info("Envie um extrato em CSV na barra lateral para começar.")
+else:
+    arquivo.seek(0)
+    funcao = categorize if metodo == "Regras" else categorize_ml
+    df = load_transactions(arquivo, categorizer=funcao)
+
+    st.write("Transações carregadas:", len(df), "| Categorização:", metodo)
 
     resumo_mensal = monthly_summary(df)
     total_entrada = resumo_mensal["entrada"].sum()
@@ -57,7 +67,9 @@ if arquivo is not None:
     col2.metric("Saídas", f"R$ {total_saida:,.2f}")
     col3.metric("Saldo", f"R$ {saldo_total:,.2f}")
 
-    aba_geral, aba_cat, aba_trans = st.tabs(["Visão geral", "Categorias", "Transações"])
+    aba_geral, aba_cat, aba_trans, aba_comp, aba_chat = st.tabs(
+        ["Visão geral", "Categorias", "Transações", "Regras vs ML", "Chat"]
+    )
 
     with aba_geral:
         st.subheader("Resumo mensal")
@@ -103,3 +115,39 @@ if arquivo is not None:
     with aba_trans:
         st.subheader("Transações")
         st.dataframe(df, use_container_width=True)
+
+    with aba_comp:
+        st.subheader("Regras vs Modelo ML")
+        comparacao = df[["estabelecimento", "valor", "tipo"]].copy()
+        comparacao["regras"] = comparacao["estabelecimento"].apply(categorize)
+        comparacao["ml"] = comparacao["estabelecimento"].apply(categorize_ml)
+        diferentes = comparacao[comparacao["regras"] != comparacao["ml"]]
+
+        st.metric("Categorias diferentes", f"{len(diferentes)} de {len(comparacao)}")
+        st.dataframe(diferentes, use_container_width=True)
+
+    with aba_chat:
+        st.subheader("Pergunte sobre seus dados")
+
+        if "mensagens" not in st.session_state:
+            st.session_state.mensagens = []
+
+        for msg in st.session_state.mensagens:
+            with st.chat_message(msg["role"]):
+                st.write(msg["content"])
+
+        pergunta = st.chat_input("Ex.: Em qual categoria eu mais gastei?")
+        if pergunta:
+            st.session_state.mensagens.append({"role": "user", "content": pergunta})
+            with st.chat_message("user"):
+                st.write(pergunta)
+
+            contexto = montar_contexto(
+                monthly_summary(df).reset_index().astype({"mes": str}),
+                category_summary(df).reset_index(),
+            )
+            with st.chat_message("assistant"):
+                with st.spinner("Pensando..."):
+                    resposta = perguntar(contexto, st.session_state.mensagens)
+                st.write(resposta)
+            st.session_state.mensagens.append({"role": "assistant", "content": resposta})
