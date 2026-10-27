@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
+.stApp {
+    background:
+        radial-gradient(circle at 15% 10%, rgba(0, 245, 212, 0.12), transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(155, 93, 229, 0.15), transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(0, 187, 249, 0.10), transparent 50%),
+        #070B14;
+}
+
+header[data-testid="stHeader"] {
+    background: transparent;
+}
+
+#MainMenu, footer {
+    visibility: hidden;
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 1px;
+}
+
+h1 {
+    background: linear-gradient(90deg, #00F5D4, #00BBF9, #9B5DE5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+div[data-testid="stMetric"] {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(0, 245, 212, 0.25);
+    border-radius: 16px;
+    padding: 18px 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.08);
+    transition: all 0.3s ease;
+}
+
+div[data-testid="stMetric"]:hover {
+    border-color: rgba(0, 245, 212, 0.7);
+    box-shadow: 0 0 28px rgba(0, 245, 212, 0.25);
+    transform: translateY(-3px);
+}
+
+div[data-testid="stMetricValue"] {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+}
