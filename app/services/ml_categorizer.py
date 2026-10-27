@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from functools import lru_cache
 import joblib
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -25,6 +25,7 @@ def treinar():
     joblib.dump(modelo, MODELO)
     return modelo
 
+@lru_cache(maxsize=1)
 
 def carregar():
     if MODELO.exists():

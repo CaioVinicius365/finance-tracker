@@ -7,6 +7,7 @@ def categorize(estabelecimento):
             return categoria
     return "outros"
 
+
 if __name__ == "__main__":
     print(categorize("UBER *TRIP"))
     print(categorize("Salario Empresa ABC"))

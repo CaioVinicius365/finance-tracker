@@ -1,11 +1,11 @@
 import pandas as pd
 from app.services.categorizer import categorize
 
-def load_transactions(path):
+def load_transactions(path, categorizer=categorize):
     df = pd.read_csv(path)
     df["data"] = pd.to_datetime(df["data"])
     df["mes"] = df["data"].dt.to_period("M")
-    df["categoria"] = df["estabelecimento"].apply(categorize)
+    df["categoria"] = df["estabelecimento"].apply(categorizer)
     return df
 
 def monthly_summary(df):
